@@ -1,12 +1,11 @@
 const express = require('express')
+const app = express()
 const cors = require('cors')
 
-const app = express()
-
-app.use(express.json())
 app.use(cors())
+app.use(express.json())
 
-const inventory = ['greeting card', 'wagon', 'computer', 'table', 'chair', 'milk', 'sailboat', 'conditioner', 'rusty nail', 'desk', 'Macy']
+const inventory = ['greeting card', 'wagon', 'computer', 'table', 'chair', 'milk', 'basketball', 'game console', 'rusty nail', 'desk', 'Macy']
 
 app.get('/api/inventory', (req, res) => {
     if(req.query.item){
@@ -17,8 +16,8 @@ app.get('/api/inventory', (req, res) => {
     }
 })
 
-app.get('/api/inventory/:index', (req, res) => {
-    res.status(200).send(inventory[+req.params.index])
+app.get('/api/inventory/:id', (req, res) => {
+    res.status(200).send(inventory[+req.params.id])
 })
 
 app.listen(5050, () => console.log('Having a sandwich on port 5050'))
