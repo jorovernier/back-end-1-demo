@@ -1,23 +1,45 @@
+// SETUP CODE
 const express = require('express')
-const app = express()
 const cors = require('cors')
+
+const app = express()
 
 app.use(cors())
 app.use(express.json())
 
-const inventory = ['greeting card', 'wagon', 'computer', 'table', 'chair', 'milk', 'basketball', 'game console', 'rusty nail', 'desk', 'Macy']
+// DATABASE
+const inventory = ['computer', 'table', 'Macy', 'xbox one', 'pickle', "Baldur's Gate 1", 'zebra']
 
+// ENDPOINTS
 app.get('/api/inventory', (req, res) => {
     if(req.query.item){
-        const filteredItems = inventory.filter((item) => item.toLowerCase().includes(req.query.item.toLowerCase()))
+        // Explicit Return Callback
+        const filteredItems = inventory.filter((invItem) => {
+            return invItem.toLowerCase().includes(req.query.item.toLowerCase())
+        })
+
+        // Implicit Return Callback
+        const oneLine = inventory.filter(invItem => invItem.toLowerCase().includes(req.query.item.toLowerCase()))
+
         res.status(200).send(filteredItems)
     } else {
         res.status(200).send(inventory)
     }
 })
 
-app.get('/api/inventory/:id', (req, res) => {
-    res.status(200).send(inventory[+req.params.id])
+app.get('/api/inventory/:index', (req, res) => {
+    res.status(200).send(inventory[+req.params.index])
 })
 
-app.listen(5050, () => console.log('Having a sandwich on port 5050'))
+// Visual Guide To Request Object
+// let req = {
+//     aBunchOfOtherProps: 'whatever',
+//     params: {
+//         index: '2'
+//     },
+//     query: {},
+//     body: {}
+// }
+
+// LISTEN
+app.listen(5050, () => console.log('Having a party on port 5050!'))
